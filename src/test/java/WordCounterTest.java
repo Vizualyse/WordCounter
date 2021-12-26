@@ -27,7 +27,7 @@ public class WordCounterTest {
     @Test
     public void tokenize() {
         WordCounter wc = new WordCounter("Hello world & good morning. The date is 18/05/2016");
-        ArrayList<String> methodReturn = wc.Tokenize();
+        ArrayList<String> methodReturn = wc.getInputArray();
         ArrayList<String> testArrayList = new ArrayList<>(Arrays.asList("Hello", "world", "&", "good", "morning", "The", "date", "is", "18/05/2016"));
         Assert.assertEquals(testArrayList, methodReturn);
     }
@@ -35,7 +35,7 @@ public class WordCounterTest {
     @Test
     public void count() {
         WordCounter wc = new WordCounter("Hello world & good morning. The date is 18/05/2016");
-        int[] methodReturn = wc.Count();
+        int[] methodReturn = wc.getWordLengths();
         int[] testArray = new int[]{0, 1, 1, 1, 2, 2, 0, 1, 0, 0, 1};
         Assert.assertArrayEquals(testArray, methodReturn);
     }
@@ -43,7 +43,6 @@ public class WordCounterTest {
     @Test
     public void checkParams() {
         WordCounter wc = new WordCounter("Hello world & good morning. The date is 18/05/2016");
-        wc.Tokenize();
         Assert.assertEquals(wc.getWordCount(), 9);
         Assert.assertEquals(wc.getLongestWord(), 10);
     }

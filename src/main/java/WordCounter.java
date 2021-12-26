@@ -8,13 +8,18 @@ public class WordCounter {
     private int wordCount = 0;
     private int longestWord = 0;
     private int[] wordLengths;
+    private ArrayList<String> inputArray;
 
-    public WordCounter(String input){
+    public WordCounter(String input){   //construct object with input string
         this.input = input;
-    }               //construct object with input string
+        Count();
+    }
 
-    public ArrayList<String> Tokenize(){
-        ArrayList<String> inputArray = new ArrayList<String>();
+    /**
+     * Breaks full text into array of strings based on assumptions on what constitutes a word
+     */
+    private void Tokenize(){
+        inputArray = new ArrayList<String>();
         StringTokenizer st = new StringTokenizer(input, " .");      //break tokens at space or .
         while(st.hasMoreTokens()){
             String token = st.nextToken();
@@ -22,20 +27,22 @@ public class WordCounter {
             longestWord = token.length()>longestWord?token.length():longestWord;
             inputArray.add(token);
         }
-        return inputArray;
     }
 
-    public int[] Count(){
-        ArrayList<String> inputArray = Tokenize();
+    /**
+     * Runs through an ArrayList of Strings and counts the word lengths
+     */
+    private void Count(){
+        Tokenize();
         wordLengths = new int[longestWord+1];
         inputArray.forEach(word -> { wordLengths[word.length()]++; });      //increment counter (array index = word length)
-        return wordLengths;
     }
 
+    /**
+     * Writes a formatted string to console giving details about this object
+     */
     public void Output(){
         NumberFormat formatter = new DecimalFormat(".###");     //3 decimal places
-        if(wordLengths == null)
-            wordLengths = Count();
 
         float averageWordLength = 0;
         for(int i = 1; i < wordLengths.length; i++)
@@ -65,19 +72,28 @@ public class WordCounter {
         System.out.print(output);
     }
 
+    /**
+     * @return no. of words in text
+     */
     public int getWordCount() {
-        if(wordCount == 0)
-            Count();
         return wordCount;
     }
+    /**
+     * @return longest word in text
+     */
     public int getLongestWord() {
-        if(longestWord == 0)
-            Count();
         return longestWord;
     }
+    /**
+     * @return arraylist containing each word
+     */
+    public ArrayList<String> getInputArray() {
+        return inputArray;
+    }
+    /**
+     * @return array with no. of occurrences for each word length
+     */
     public int[] getWordLengths() {
-        if(wordLengths == null)
-            Count();
         return wordLengths;
     }
 }
